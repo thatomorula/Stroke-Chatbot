@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Stroke Chatbot</title>
+
+
+
+    <style>
+        body, html {
+            height: 100%;
+            background: white;
+        }
+
+        .container-fluid {
+            height: 100vh;
+        }
+
+        .row {
+            height: 100%;
+        }
+
+        .card{
+            background: none
+        }
+
+        nav.sidebar, main {
+            min-height: 100%;
+        }
+
+                .sidebar-heading {
+            text-align: center;
+            color: #333; /* You can change this to any color you prefer */
+        }
+
+        .nav-item {
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;  /* To give the boxes slightly rounded corners */
+            text-align: center;  /* To center the text within each box */
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #333;  /* You can change this to any color you prefer */
+        }
+
+        .nav-item a:hover {
+            text-decoration: none;
+            color: #007bff; /* Change the hover color if needed */
+        }
+
+        .highlighted-nav-item {
+            background-color: #e9ecef; /* a light grey color, you can adjust as per your preference */
+            border-radius: 5px;
+            padding: 5px 10px; /* some padding for better visuals */
+        }
+
+        .suggestion-box {
+            padding-left: 20px; /* Add space inside the box */
+            margin-left: 10px;  /* Add space outside the box */
+            color: #E3E3E3
+        }
+
+        .input-box {
+            height: 60px;
+            width: 100%;
+            background: none
+        }
+
+        .input-box input{
+            width: 100%;
+            height: 60px;
+            border-radius: 15px;
+            background: #1E1F20
+        }
+
+        .whole-body {
+            boarder: none;
+            background-color: #e9ecef;
+        }
+
+        .strokegpt-heading{
+            color: #E3E3E3;
+        }
+
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Navigation -->
+            <nav class="col-lg-3 bg-light">
+                <div class="position-sticky">
+                    <h3 class="sidebar-heading mt-3 mb-3">StrokeCare Companion</h3>
+                    <div class="nav-item highlighted-nav-item">StrokeGPT</div>
+
+                    <div class="nav-item">
+                        <a href="/predict">Stroke Prediction</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="/doctor_note">Doctor's Information</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="#link-for-calendar">Reminders</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="#link-for-calendar">Calendar</a>
+                    </div>
+
+                </div>
+            </nav>
+
+
+            <!-- Main Content -->
+            <main class="col-lg-9" >
+                <h2 class="mb-4 text-center mt-3 strokegpt-heading">StrokeGPT</h2>
+                <div class="card" >
+                    <div class="main-content">
+                        <div class="card-body" >
+                            <div id="chat-box" style="height: 300px; overflow-y: scroll;overflow-y: hidden; overflow-x: hidden;" >
+                                    <div class="row"> <!-- This is the row that contains the blocks -->
+
+                        <!-- Understand Block -->
+                        <div class="suggestion-box">
+                            <b>Understand:</b>
+                            <ul>
+                                <li>Analyze risk factors for strokes</li>
+                                <li>Assist in understanding health statistics</li>
+                                <li>Interpret doctors' information and recommendations</li>
+                            </ul>
+                        </div>
+                        <div class="suggestion-box">
+                            <b>Create:</b>
+                            <ul>
+                                <li>Offer health tips and advice</li>
+                                <li>Draft informative health guides</li>
+                                <li>Provide resources on stroke rehabilitation</li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                            </div>
+                            <div class="input-box" >
+                                <input type="text" placeholder="Type your message..." id="user-input">
+                            <!--    <textarea id="user-input" class="form-control mt-3" placeholder="Type your message..."></textarea> -->
+                            </div>
+                            <button id="send-btn" class="btn btn-primary mt-3">Send</button>
+                            <button id="clear-btn" class="btn btn-secondary mt-3">Clear Conversation</button>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    $('#send-btn').on('click', function() {
+                        let userMessage = $('#user-input').val().trim();
+                        $('.suggestion-box').hide();
+                        if (userMessage) {
+                            appendMessage("You", userMessage);
+                            $.ajax({
+                                url: '/chatbot',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({ message: userMessage }),
+                                success: function(response) {
+                                    appendMessage("StrokeGPT", response.message);
+                                }
+                            });
+
+                            $('#user-input').val('');
+
+                            var chatBox = document.getElementById('chat-box');
+                            var messageContainers = chatBox.querySelectorAll('div');
+                            for (var i = 0; i<= messageContainers.length - 1; i++) {
+                                chatBox.appendChild(messageContainers[i]);
+                            }
+
+                        }
+                    });
+
+                    function appendMessage(role, message) {
+                    // Convert bullet and numbered points to HTML list format
+                    message = message.replace(/(^\d+)\. (.+$)/gm, '<li>$2</li>').replace(/(^\* .*$)/gm, '<li>$1</li>');
+
+                    // If message contains a list, wrap it in <ul> or <ol> tags
+                    if (message.indexOf('<li>') !== -1) {
+                        if (message.indexOf('*') !== -1) {
+                            message = message.replace(/<li>\* /g, '<li>');  // Remove * symbol for bullet points
+                            message = '<ul>' + message + '</ul>';
+                        } else {
+                            message = '<ol>' + message + '</ol>';
+                        }
+                    }
+
+                    $('#chat-box').prepend(`<div><b>${role}:</b> ${message}</div>`);
+                    //$('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+
+
+                    }
+
+                    $('#clear-btn').on('click', function() {
+                    let defaultMessage = `
+                        <p><b>Hello again</b></p>
+                        <div class="row">
+
+                        <div class="suggestion-box">
+                            <b>Understand:</b>
+                            <ul>
+                                <li>Analyze risk factors for strokes</li>
+                                <li>Assist in understanding health statistics</li>
+                                <li>Interpret doctors' information and recommendations</li>
+                            </ul>
+                        </div>
+                        <div class="suggestion-box">
+                            <b>Create:</b>
+                            <ul>
+                                <li>Offer health tips and advice</li>
+                                <li>Draft informative health guides</li>
+                                <li>Provide resources on stroke rehabilitation</li>
+                            </ul>
+                        </div>
+                        </div>
+                    `;
+                    $('#chat-box').html(defaultMessage);
+                });
+
+
+                </script>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

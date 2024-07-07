@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Stroke Chatbot</title>
+
+    <style>
+        body, html {
+            height: 100%;
+            background: #131314;
+        }
+
+        .container-fluid {
+            height: 100vh;
+        }
+
+        .row {
+            height: 100%;
+        }
+
+        .col-lg-3 {
+            background: #1E1F20;
+        }
+
+        nav.sidebar, main {
+            min-height: 100%;
+        }
+
+                .sidebar-heading {
+            text-align: center;
+            color: #333; /* You can change this to any color you prefer */
+        }
+
+        .nav-item {
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;  /* To give the boxes slightly rounded corners */
+            text-align: center;  /* To center the text within each box */
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: white;  /* You can change this to any color you prefer */
+        }
+
+        .nav-item a:hover {
+            text-decoration: none;
+            color: #007bff; /* Change the hover color if needed */
+        }
+
+        .highlighted-nav-item {
+            background-color: #e9ecef; /* a light grey color, you can adjust as per your preference */
+            border-radius: 5px;
+            padding: 5px 10px; /* some padding for better visuals */
+        }
+
+        /* StrokeCare Companion Heading*/
+        .position-sticky h3 {
+            color: #509852;
+        }
+
+        /*Where Main Content goes*/
+        /* Stroke GPT Heading*/
+        .col-lg-9 h2{
+            color: #509852;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Navigation -->
+            <nav class="col-lg-3">
+                <div class="position-sticky">
+                    <h3 class="sidebar-heading mt-3 mb-3">StrokeCare Companion</h3>
+                    <div class="nav-item ">
+                        <a href="/chatbot">Chatbot</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="/predict">Stroke Prediction</a>
+                    </div>
+                    <div class="nav-item highlighted-nav-item">Doctor's Note Submission</div>
+
+                    <div class="nav-item">
+                        <a href="#link-for-calendar">Reminders</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="#link-for-calendar">Calendar</a>
+                    </div>
+
+                </div>
+            </nav>
+
+
+            <!-- Main Content -->
+            <main class="col-lg-9 text-center">
+                <h2 class="mb-4 text-center mt-3">Doctor's Information</h2>
+                <form action="/doctor_note" method="post">
+                    <label style="color: white;">Diagnosis:</label><br>
+                    <textarea style="background: #1E1F20; color: {{ text_color }};" name="diagnosis" class="form-control mt-3" rows="3" cols="50" required>{{ diagnosis }}</textarea><br>
+
+                    <label style="color: white;">Medications Prescribed:</label><br>
+                    <textarea style="background: #1E1F20; color: {{ text_color }};" name="medications" class="form-control mt-3" rows="3" cols="50" >{{ medications }}</textarea><br>
+
+                    <label style="color: white;">Doctor's Recommendations:</label><br>
+                    <textarea style="background: #1E1F20; color: {{ text_color }};" name="recommendations" class="form-control mt-3" rows="3" cols="50" >{{ recommendations }}</textarea><br>
+
+                    <button class="btn btn-primary">Submit</button>
+
+                </form>
+
+            </main>
+        </div>
+    </div>
+</body>
+</html>

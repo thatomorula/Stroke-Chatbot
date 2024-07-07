@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Stroke Chatbot</title>
+    <style>
+        body, html {
+            height: 100%;
+            background: #131314;
+        }
+
+        .container-fluid {
+            height: 100vh;
+        }
+
+        .col-lg-3 {
+            background: #1E1F20;
+        }
+
+        .row {
+            height: 100%;
+        }
+
+        nav.sidebar, main {
+            min-height: 100%;
+        }
+
+        .sidebar-heading {
+            text-align: center;
+            color: #333;
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            border: 1px solid #ddd;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-item a:hover {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .highlighted-nav-item {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .prediction-result {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        /* StrokeCare Companion Heading*/
+        .position-sticky h3 {
+            color: #509852;
+        }
+
+        /*Where Main Content goes*/
+        /* Stroke GPT Heading*/
+        .col-lg-9 h2{
+            color: #509852;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+
+        <div class="row">
+            <!-- Navigation -->
+            <nav class="col-lg-3">
+                <div class="position-sticky">
+                    <h3 class="sidebar-heading">StrokeCare Companion</h3>
+                    <div class="nav-item">
+                        <a href="/chatbot">StrokeGPT</a>
+                    </div>
+
+                    <div class="nav-item highlighted-nav-item">Stroke Prediction</div>
+
+                    <div class="nav-item">
+                        <a href="/doctor_note">Doctor's Information</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="#link-for-calendar">Reminders</a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a href="#link-for-calendar">Calendar</a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-lg-9">
+                <h2 class="mb-1 text-center mt-1">Stroke Prediction</h2>
+                <form action="/predict" method="post">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label style="color: white;">Gender:</label>
+                            <select name="gender" class="form-control">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label style="color: white;">Age:</label>
+                            <input type="number" name="age" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label style="color: white;">Ever Married:</label>
+                            <select name="ever_married" class="form-control">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label style="color: white;">Work Type:</label>
+                            <select name="work_type" class="form-control">
+                                <option value="Private">Private</option>
+                                <option value="Self-employed">Self-employed</option>
+                                <option value="Govt_job">Government</option>
+                                <option value="Never_worked">Never worked</option>
+                            </select>
+                        </div>
+                    </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label style="color: white;">Residence Type:</label>
+                                <select name="Residence_type" class="form-control">
+                                    <option value="Urban">Urban</option>
+                                    <option value="Rural">Rural</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label style="color: white;">Smoking Status:</label>
+                                <select name="smoking_status" class="form-control">
+                                    <option value="never smoked">Never Smoked</option>
+                                    <option value="formerly smoked">Formerly Smoked</option>
+                                    <option value="smokes">Smokes</option>
+                                    <option value="Unknown">Unknown</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label style="color: white;">Hypertension:</label>
+                                <select name="hypertension" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label style="color: white;">Heart Disease:</label>
+                                <select name="heart_disease" class="form-control">
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label style="color: white;">BMI:</label>
+                                <input type="number" step="0.1" name="bmi" class="form-control" required>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label style="color: white;">Average Glucose Level:</label>
+                                <input type="number" step="0.1" name="avg_glucose_level" class="form-control" required>
+                            </div>
+
+                        </div>
+
+
+                    <button class="btn btn-primary">Submit</button>
+                </form>
+
+
+
+
+                    <div style="color: #131314;">{% if prediction %}</div>
+                    <p style="color: #131314;" class="prediction-result">Prediction result: {{ prediction }}</p>
+                    <p class="prediction-result" style="color: {{ text_color }}">Prediction result: {{ prediction }}</p>
+                    <div style="color: #131314;">{% endif %}</div>
+                    <div style="color: #131314;">{% if interpretation %}</div>
+                        <p style="color: #131314;" class="prediction-result" id="interpretation" name="interpretation">{{ interpretation }}</p>
+                    <div style="color: #131314;">{% endif %}</div>
+
+
+
+
+            </main>
+        </div>
+    </div>
+</body>
+</html>

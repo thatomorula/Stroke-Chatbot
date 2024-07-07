@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worship Concert</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eeecea;
+        }
+
+        .header, .second-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+
+        .header {
+            display: flex;
+            background-color: #000;
+            color: #fff;
+            height: 80px;
+        }
+
+        .header > div {
+            flex: 1; /* Each section takes up 1/3 of the width */
+            display: flex;
+            justify-content: center; /* Center the content horizontally */
+            align-items: center; /* Center the content vertically */
+        }
+
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .second-header {
+            display: flex;
+            background-color: #000;
+            color: #000;
+            height: 70px;
+            top: 80px; /* Space below the fixed header */
+        }
+
+        .second-header .first-half {
+            flex: 0.25; /* Each of these sections takes up 25% of the width */
+            background-color: white;
+            margin: 5px;
+            text-align: center;
+            font-size: large;
+        }
+
+        .second-header .second-half {
+            flex: 0.5; /* This section takes up 50% of the width */
+            background-color: white;
+            margin: 5px;
+            text-align: center;
+            font-size: large;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .second-half {
+            overflow: hidden; /* Ensure text overflow is hidden */
+            position: relative; /* Needed for absolute positioning */
+            width: 100%; /* Ensure it spans full width */
+        }
+
+        .second-half h4 {
+            white-space: nowrap; /* Prevent text wrapping */
+            position: absolute; /* Position the text absolutely */
+            top: 0; /* Align text to the top */
+            left: 0; /* Start from the left */
+            width: 100%; /* Occupy full width */
+            opacity: 0; /* Initially hide the text */
+            animation: textFlow 12s linear infinite; /* Adjust duration as per your need */
+        }
+
+        .second-half h4:nth-child(2) {
+            animation-delay: 4s; /* Delay the animation of the second h4 */
+        }
+
+        .second-half h4:nth-child(3) {
+            animation-delay: 8s; /* Delay the animation of the third h4 */
+        }
+
+        @keyframes textFlow {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            8% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            25% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            33% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #eeecea;
+            margin-top: 50px;  /*Space below the fixed headers */
+            padding-top: 20px; /* Padding for content alignment */
+        }
+
+        .content {
+            flex: 1;
+            max-width: 50%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .content h1 {
+            font-size: 48px;
+            margin: 20px 0;
+            color: #000;
+        }
+
+        .content .date-time {
+            font-size: 25px;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        .content p {
+            font-size: 18px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .content .get-tickets {
+            background-color: #ff3b30;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            width: 100px;
+            text-align: center;
+        }
+
+        .image-container {
+            flex: 1;
+            max-width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Aligns the image to the left */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .time_and_location {
+            margin-top: 50px;
+            margin-left: 100px;
+        }
+
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: black;
+            margin-top: 50px;  /*Space below the fixed headers */
+            height: 300px;
+            padding: 5px;
+        }
+
+        /*.contact {
+            background-color: black;
+            margin-top: 50px;
+            height: 300px;
+            padding: 5px;
+        }*/
+
+        /*.contact .contact_desc{
+            font-size: large;
+            background-color: #abd7cc;
+            height: 100%;
+            width: 50%;
+            align-content: center;
+        }
+
+        .contact .contact_desc .contact_desc_text{
+            color: black;
+        }
+
+        .contact .get_contact {
+            background-color: #eeecea;
+            font-size: medium;
+            height: 100%;
+            width: 50%;
+        }
+*/
+
+        .contact .contact_desc{
+            background-color: #abd7cc;
+            height: 100%;
+            width: 50%;
+            margin: auto;
+            align-content: center;
+        }
+        /*.contact .contact_desc {
+            background-color: #abd7cc; 
+            padding: 50px;
+            height: 100%;
+            width: 50%;
+            margin: 50px;
+        }*/
+
+        .contact_desc_text {
+            text-align: center;
+            padding: 0px;
+        }
+
+        .contact_desc_text p {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: black;
+        }
+
+        .contact_desc_text p:first-child {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .contact_desc_text p:nth-child(2) {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .contact .get_contact {
+            background-color: #eeecea;
+            font-size: medium;
+            height: 100%;
+            width: 50%;
+        }
+
+        .map_section iframe {
+            border: 0;
+            width: 100%;
+            height: 300px;
+        }
+
+    .footer-line {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid black;
+    margin: 40px 0;
+    height: 0%;
+}
+
+footer {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    border: none;
+}
+
+.social_media a {
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.social_media img {
+    width: 40px;
+    height: 40px;
+}
+
+.footer_text {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 20px 0;
+}
+
+.footer_text p {
+    margin: 5px 0;
+}
+
+.footer_text a {
+    color: #333;
+    text-decoration: none;
+}
+
+.footer_text .site_design {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">
+        <a href="#"> Temp</a>
+    </div>
+    <div class="left">
+        <a href="#" class="register">ABOUT</a>
+    </div>
+    <div class="center">
+        <a href="#">DIRECTION</a>
+    </div>
+    <div class="right">
+        <a href="#">CONTACT</a>
+    </div>
+</div>
+
+<!-- Second Header -->
+<div class="second-header">
+    <div class="first-half">
+        <h4>REGISTER</h4>
+    </div>
+    <div class="first-half">
+        <h4>SOCIAL MEDIA</h4>
+    </div>
+    <div class="second-half">
+        <h4>07 AUGUST 2024</h4>
+        <h4>FROM 1PM TO 5PM</h4>
+        <h4>CFC JOHANNESBURG</h4>
+    </div>
+</div>
+
+<div class="container">
+    <div class="image-container">
+        <img src="https://static.wixstatic.com/media/78183b_7a44ea824a4348d7a3e190f6de6d1fd1~mv2.png/v1/fill/w_599,h_768,fp_0.50_0.50,q_90,enc_auto/78183b_7a44ea824a4348d7a3e190f6de6d1fd1~mv2.png" alt="Piano">
+    </div>
+    <div class="content">
+        <h1>Worship Concert</h1>
+        <h3>07 Aug 2024, 11:12 | Christian Family Church</h3>
+        <p>Way of the Master is a dynamic evangelical course cultivating our compassion for the lost, teaching us how to overcome the fear of sharing the good news with others and equipping us with some tools on how to lead the lost to Christ.</p>
+        <p>Each session of this course has a DVD and teaching by our host,
+        showing us how easy it is to interact with people while sharing the gospel.
+        Book your spot today and join us on the 8th, 9th, 15th, 16th, 22nd and 23rd of July 2024 online.</p>
+        <a href="#" class="get-tickets">Register</a>
+    </div>
+</div>
+
+<div class="time_and_location">
+    <p>TIME AND LOCATION</p>
+    <P <span style="font-weight:bold;">07 AUG 2024, 13:00 - 17:00 <br>
+    Christian Family Church, 123 Main St, Marshalltown, Johannesburg, 2107, South Africa</P>
+</div>
+
+<div class="contact">
+    <div class="contact_desc">
+        <div class="contact_desc_text">
+
+            <p>
+                CONTACT US
+            </p>
+            <p>
+                Christian Family Church, Johannesburg
+            </p>
+        </div>
+    </div>
+    <div class="get_contact"></div>
+</div>
+
+<div class="map_section">
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3582.0146445817427!2d28.251211615381834!3d-26.14571083371092!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9510c7d3a2e3ab%3A0x4f0d36db5c97d495!2sCnr.%20Atlas%20Rd.%20%26%20Silver%20Wings%20Blvd.%2C%20Parkhaven%2C%20Gauteng%2C%20South%20Africa!5e0!3m2!1sen!2sus!4v1624313385674!5m2!1sen!2sus" 
+        width="600" 
+        height="450" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy">
+    </iframe>
+</div>
+
+<hr class="footer-line">
+    <footer>
+        <div class="social_media">
+            <a href="#https://www.facebook.com/Christianfamilychurchjhb/"><img src="https://img.icons8.com/?size=100&id=118467&format=png&color=000000" alt="Facebook"></a>
+            <a href="#https://www.instagram.com/cfcijhb/"><img src="https://img.icons8.com/?size=100&id=32309&format=png&color=000000" alt="Instagram"></a>
+            <a href="#https://twitter.com/CFCI_JHB"><img src="https://img.icons8.com/?size=100&id=8824&format=png&color=000000" alt="Twitter"></a>
+            <a href="#https://www.youtube.com/channel/UCfwesgT53QzX3rK7me6w_yg"><img src="https://img.icons8.com/?size=100&id=37326&format=png&color=000000" alt="YouTube"></a>
+        </div>
+        <div class="footer_text">
+            <p>© 2021 Christian Family Church International</p>
+            <!--<p>THE MATERIALS CONTAINED ON THIS WEBSITE ARE SOLE PROPERTY OF CHRISTIAN FAMILY CHURCH INTERNATIONAL (UNLESS STATED OTHERWISE) AND ARE PROTECTED BY COPYRIGHT, TRADEMARK AND OTHER INTELLECTUAL PROPERTY LAWS. ALL RIGHTS, TITLE AND INTEREST IN THE MATERIAL ARE RESERVED. ANY UNAUTHORIZED USE OF MATERIAL COULD RESULT IN LEGAL ACTION.</p>
+        --><a href="#">Privacy Policy</a>
+            <p class="site_design">Site designed by Karabo Sepuru</p>
+        </div>
+    </footer>
+
+<!-- Add Font Awesome for social media icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>

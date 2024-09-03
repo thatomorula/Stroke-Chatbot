@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydroponic System Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Hydroponic System Dashboard</h1>
+        <div id="sensor-data" class="sensor-grid">
+            <div class="sensor-item">
+                <h2>Temperature</h2>
+                <p id="temperature">Loading...</p>
+            </div>
+            <div class="sensor-item">
+                <h2>pH Level</h2>
+                <p id="ph">Loading...</p>
+            </div>
+            <div class="sensor-item">
+                <h2>Electrical Conductivity</h2>
+                <p id="ec">Loading...</p>
+            </div>
+            <div class="sensor-item">
+                <h2>Dissolved Oxygen</h2>
+                <p id="oxygen">Loading...</p>
+            </div>
+            <div class="sensor-item">
+                <h2>Water Level</h2>
+                <p id="water-level">Loading...</p>
+            </div>
+            <div class="sensor-item">
+                <h2>Humidity</h2>
+                <p id="humidity">Loading...</p>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
